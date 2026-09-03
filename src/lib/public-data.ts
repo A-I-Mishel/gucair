@@ -43,7 +43,14 @@ export async function getPublishedSlugs(): Promise<string[]> {
 }
 
 export async function getArticleBySlug(slug: string): Promise<(ArticleMeta & { content: string }) | null> {
-  const q = query(collection(db, "articles"), where("slug", "==", slug), limit(1));
+  // NOTE: the status constraint is required, not just the in-code check below —
+  // Firestore denies queries it cannot prove satisfy the security rules.
+  const q = query(
+    collection(db, "articles"),
+    where("status", "==", "published"),
+    where("slug", "==", slug),
+    limit(1)
+  );
   const snap = await getDocs(q);
   if (snap.empty) return null;
   const d = snap.docs[0];
