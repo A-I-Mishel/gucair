@@ -4,11 +4,15 @@ import { motion } from "framer-motion";
 import { useStats } from "@/hooks/useGlobalStats";
 import { useUniversities } from "@/hooks/useUniversities";
 import { useRankings } from "@/hooks/useRankings";
+import { getPublishedArticles } from "@/lib/firestore";
+import type { Article } from "@/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/primitives";
 import { WorldMap, ScoreLegend } from "@/components/map/WorldMap";
+import { ArticleCard } from "@/components/news/ArticleCard";
 import { PILLARS } from "@/types";
+import { useEffect, useState } from "react";
 
 export default function HomePage() {
   const { data: stats, isLoading: statsLoading, isError } = useStats();
@@ -16,6 +20,11 @@ export default function HomePage() {
   const { data: globalRanking } = useRankings("global");
 
   const top5 = globalRanking?.list?.slice(0, 5) ?? [];
+  const [latest, setLatest] = useState<Article[]>([]);
+
+  useEffect(() => {
+    getPublishedArticles(3).then(setLatest).catch(() => setLatest([]));
+  }, []);
 
   return (
     <div>
@@ -122,6 +131,31 @@ export default function HomePage() {
           )}
         </div>
       </section>
+
+      {/* Latest insights */}
+      {latest.length > 0 && (
+        <section className="mx-auto max-w-7xl px-4 pb-14">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold text-[#1e3a5f]">Latest insights</h2>
+            <Link href="/news" className="text-sm text-teal-700 hover:underline">All news →</Link>
+          </div>
+          <div className="mt-4 grid gap-4 md:grid-cols-3">
+            {latest.map((a) => (
+              <ArticleCard
+                key={a.id}
+                article={{
+                  id: a.id,
+                  title: a.title,
+                  slug: a.slug,
+                  excerpt: a.excerpt,
+                  tags: a.tags ?? [],
+                  publishedAtISO: a.publishedAt ? a.publishedAt.toDate().toISOString() : null,
+                }}
+              />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

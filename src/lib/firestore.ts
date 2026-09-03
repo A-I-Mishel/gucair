@@ -1,5 +1,17 @@
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, query, where, orderBy, limit, getDocs, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "./firebase";
+import type { Article } from "@/types";
+
+export async function getPublishedArticles(max = 20): Promise<Article[]> {
+  const q = query(
+    collection(db, "articles"),
+    where("status", "==", "published"),
+    orderBy("publishedAt", "desc"),
+    limit(max)
+  );
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }) as Article);
+}
 
 export async function submitJoinApplication(data: {
   name: string;
