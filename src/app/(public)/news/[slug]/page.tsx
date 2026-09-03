@@ -36,6 +36,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           ))}
         </div>
       )}
+      {article.imageUrl && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={article.imageUrl} alt="" className="mt-6 w-full rounded-xl object-cover" />
+      )}
       {/* Admin-authored HTML from the CMS editor. */}
       <div className="mt-6 space-y-4 text-slate-700 [&_a]:text-teal-700 [&_a]:underline [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-[#1e3a5f] [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#1e3a5f] [&_img]:rounded-xl [&_img]:my-4 [&_li]:ml-5 [&_p]:leading-relaxed [&_ul]:list-disc" dangerouslySetInnerHTML={{ __html: article.content }} />
     </article>

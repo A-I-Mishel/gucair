@@ -18,11 +18,16 @@ export function ArticleCard({ article }: { article: ArticleMeta }) {
   const tag = article.tags[0] ?? "News";
   return (
     <Card className="overflow-hidden transition hover:shadow-md">
-      <div className={`flex h-28 items-end bg-gradient-to-br p-4 ${gradientFor(article.slug)}`} aria-hidden>
-        <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-white">
-          {tag}
-        </span>
-      </div>
+      {article.imageUrl ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={article.imageUrl} alt="" className="h-36 w-full object-cover" loading="lazy" />
+      ) : (
+        <div className={`flex h-28 items-end bg-gradient-to-br p-4 ${gradientFor(article.slug)}`} aria-hidden>
+          <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-white">
+            {tag}
+          </span>
+        </div>
+      )}
       <CardHeader>
         <CardTitle>
           <Link href={`/news/${article.slug}`} className="hover:underline">

@@ -10,6 +10,7 @@ export interface ArticleMeta {
   slug: string;
   excerpt: string;
   tags: string[];
+  imageUrl: string | null;
   publishedAtISO: string | null;
 }
 
@@ -20,6 +21,7 @@ function toMeta(id: string, a: Article): ArticleMeta {
     slug: a.slug,
     excerpt: a.excerpt,
     tags: a.tags ?? [],
+    imageUrl: a.imageUrl ?? null,
     publishedAtISO: a.publishedAt ? a.publishedAt.toDate().toISOString() : null,
   };
 }

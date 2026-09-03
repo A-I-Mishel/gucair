@@ -149,6 +149,7 @@ export default function HomePage() {
                   slug: a.slug,
                   excerpt: a.excerpt,
                   tags: a.tags ?? [],
+                  imageUrl: a.imageUrl ?? null,
                   publishedAtISO: a.publishedAt ? a.publishedAt.toDate().toISOString() : null,
                 }}
               />
