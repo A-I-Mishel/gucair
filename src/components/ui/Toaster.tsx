@@ -44,7 +44,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             {t.description && <Toast.Description className="text-sm text-slate-500">{t.description}</Toast.Description>}
           </Toast.Root>
         ))}
-        <Toast.Viewport className="fixed bottom-4 right-4 z-50 flex w-80 flex-col gap-2" aria-label="Notifications" />
+        <Toast.Viewport className="fixed bottom-4 right-4 z-50 flex w-[calc(100vw-2rem)] max-w-80 flex-col gap-2" aria-label="Notifications" />
       </Toast.Provider>
     </ToastContext.Provider>
   );

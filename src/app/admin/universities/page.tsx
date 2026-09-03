@@ -157,9 +157,9 @@ export default function AdminUniversitiesPage() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h1 className="text-2xl font-bold text-[#1e3a5f]">Universities</h1>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <label className="cursor-pointer rounded-md border border-slate-200 px-4 py-2 text-sm hover:bg-slate-100">
             Import CSV
             <input type="file" accept=".csv" className="hidden" aria-label="Upload CSV for bulk import"

@@ -57,7 +57,7 @@ export default function RankingsPage() {
         ) : (
           <>
             <RankingTable rows={rows} />
-            <div className="mt-3 flex items-center gap-3 text-sm">
+            <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
               <button disabled={page === 0} onClick={() => setPage(page - 1)} className="rounded-md border px-3 py-1 disabled:opacity-40" aria-label="Previous page">← Prev</button>
               <span aria-live="polite">Page {page + 1} of {pageCount} ({filtered.length} universities)</span>
               <button disabled={page + 1 >= pageCount} onClick={() => setPage(page + 1)} className="rounded-md border px-3 py-1 disabled:opacity-40" aria-label="Next page">Next →</button>

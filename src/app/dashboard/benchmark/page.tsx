@@ -36,7 +36,7 @@ export default function BenchmarkPage() {
         ))}
         {scored.length === 0 && <p className="text-sm text-slate-500">No assessed universities yet.</p>}
       </div>
-      <div id="report-content" className="bg-white p-8">
+      <div id="report-content" className="bg-white p-4 sm:p-8">
         <h2 className="text-xl font-bold">GUCAIR Benchmark Report</h2>
         <p className="text-sm text-slate-500">{new Date().toLocaleDateString()} · {peers.length} universities</p>
         <div className="mt-4 overflow-x-auto">

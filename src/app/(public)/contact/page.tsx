@@ -47,7 +47,7 @@ export default function ContactPage() {
       <h1 className="text-3xl font-bold text-[#1e3a5f]">Join the consortium</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
         <div><Label htmlFor="name">University name</Label><Input id="name" {...register("name")} />{errors.name && <p className="text-xs text-red-500">{errors.name.message}</p>}</div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div><Label htmlFor="country">Country</Label><Input id="country" {...register("country")} />{errors.country && <p className="text-xs text-red-500">{errors.country.message}</p>}</div>
           <div><Label htmlFor="city">City</Label><Input id="city" {...register("city")} /></div>
         </div>

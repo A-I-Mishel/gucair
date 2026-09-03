@@ -25,7 +25,7 @@ export default function HomePage() {
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl text-4xl font-bold leading-tight md:text-6xl"
+            className="max-w-3xl text-3xl font-bold leading-tight sm:text-4xl md:text-6xl"
           >
             Global University Consortium of AI Readiness
           </motion.h1>
