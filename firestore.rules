@@ -1,0 +1,37 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAuth() { return request.auth != null; }
+    function isAdmin() { return isAuth() && request.auth.token.role == "admin"; }
+    function isRep() { return isAuth() && request.auth.token.role == "rep"; }
+    function ownsUni(id) { return isRep() && request.auth.token.universityId == id; }
+
+    match /universities/{id} {
+      allow read: if resource.data.status == "approved" || isAdmin() || ownsUni(id);
+      allow create: if isAdmin();
+      allow update: if isAdmin() || (ownsUni(id) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(["name","website","logoUrl","studentCount","facultyCount"]));
+    }
+    match /assessments/{id} {
+      // Validated assessments are public (published scores); drafts/submissions stay private.
+      allow read: if resource.data.status == "validated" || isAdmin() || (isRep() && resource.data.universityId == request.auth.token.universityId);
+      allow create: if isRep() && request.resource.data.universityId == request.auth.token.universityId;
+      allow update: if isAdmin() || (isRep() && resource.data.universityId == request.auth.token.universityId && resource.data.status == "draft");
+    }
+    match /users/{uid} {
+      allow read: if isAuth() && (request.auth.uid == uid || isAdmin());
+      // Admins have full write. Anyone may create ONLY their own doc, ONLY as
+      // role "public" (first-login self-provisioning for Google sign-ins).
+      allow create: if isAdmin() || (isAuth() && request.auth.uid == uid
+        && request.resource.data.role == "public"
+        && request.resource.data.keys().hasOnly(["email", "name", "role", "createdAt", "lastLogin"]));
+      allow update, delete: if isAdmin();
+    }
+    match /stats/{doc} { allow read: if true; allow write: if false; }
+    match /rankings/{r} { allow read: if true; allow write: if false; }
+    match /articles/{id} {
+      allow read: if resource.data.status == "published" || isAdmin();
+      allow write: if isAdmin();
+    }
+    match /questions/{id} { allow read: if true; allow write: if isAdmin(); }
+  }
+}

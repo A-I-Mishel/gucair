@@ -1,0 +1,3 @@
+name,country,region,city,lat,lng,website,type,studentCount,facultyCount,year
+"Massachusetts Institute of Technology",USA,"North America",Cambridge,42.3601,-71.0942,https://web.mit.edu,private,11500,1300,1861
+"University of Toronto",Canada,"North America",Toronto,43.6629,-79.3957,https://www.utoronto.ca,public,97000,8000,1827
